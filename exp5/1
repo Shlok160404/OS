@@ -1,0 +1,83 @@
+#!/bin/bash
+
+# Function to check if a number is even or odd
+even_or_odd() {
+    echo "Enter a number:"
+    read num
+
+    if [ $((num % 2)) -eq 0 ]; then
+        echo "$num is even"
+    else
+        echo "$num is odd"
+    fi
+}
+
+# Function to find the largest of three numbers
+largest_of_three() {
+    echo "Enter three numbers:"
+    read num1
+    read num2
+    read num3
+
+    if [ $num1 -gt $num2 ] && [ $num1 -gt $num3 ]; then
+        echo "$num1 is the largest"
+    elif [ $num2 -gt $num1 ] && [ $num2 -gt $num3 ]; then
+        echo "$num2 is the largest"
+    else
+        echo "$num3 is the largest"
+    fi
+}
+
+# Function to check if a year is a leap year
+leap_year() {
+    echo "Enter a year:"
+    read year
+
+    if [ $((year % 4)) -eq 0 ] && [ $((year % 100)) -ne 0 ] || [ $((year % 400)) -eq 0 ]; then
+        echo "$year is a leap year"
+    else
+        echo "$year is not a leap year"
+    fi
+}
+
+# Function to calculate balance of the account
+calculate_balance() {
+    echo "Enter account balance:"
+    read balance
+
+    echo "Enter withdrawal amount:"
+    read withdrawal_amount
+
+    if [ $withdrawal_amount -lt 1500 ]; then
+        tax=$(echo "scale=2; $withdrawal_amount * 0.03" | bc)
+    elif [ $withdrawal_amount -gt 1500 ] && [ $withdrawal_amount -lt 3000 ]; then
+        tax=$(echo "scale=2; $withdrawal_amount * 0.04" | bc)
+    else
+        tax=$(echo "scale=2; $withdrawal_amount * 0.05" | bc)
+    fi
+
+    if [ $withdrawal_amount -gt $balance ]; then
+        echo "Insufficient balance"
+    else
+        echo "Withdrawal amount: $withdrawal_amount"
+        echo "Tax deducted: $tax"
+        remaining_balance=$(echo "scale=2; $balance - $withdrawal_amount - $tax" | bc)
+        echo "Remaining balance: $remaining_balance"
+    fi
+}
+
+# Main script
+echo "a) Check if a number is even or odd"
+echo "b) Find the largest of three numbers"
+echo "c) Check if a year is a leap year"
+echo "d) Calculate balance of the account"
+echo "Enter your choice:"
+read choice
+
+case $choice in
+    a) even_or_odd ;;
+    b) largest_of_three ;;
+    c) leap_year ;;
+    d) calculate_balance ;;
+    *) echo "Invalid choice" ;;
+esac

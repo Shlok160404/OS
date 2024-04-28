@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo "Listing all processes for the current shell using 'ps':"
+ps aux
+
+echo "Displaying real-time system monitoring with 'top' (will close after 10 seconds):"
+top -b -n 1
+
+echo "Changing the priority of a process. First, let's find a process to renice:"
+ps aux | head -5
+
+read -p "Enter the PID of the process to renice: " pid
+read -p "Enter the new nice value (between -20 and 19): " nice_value
+renice $nice_value -p $pid
+
+echo "Priority changed. Verifying with 'ps':"
+ps -o pid,ni,cmd -p $pid
+
+echo "Starting a new process with a modified scheduling priority using 'nice':"
+read -p "Enter the command to run with 'nice': " command
+nice -n $nice_value $command
+
+echo "Process started with nice value $nice_value. Check with 'ps':"
+ps -o pid,ni,cmd -p $!

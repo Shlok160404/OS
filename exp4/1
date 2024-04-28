@@ -1,0 +1,75 @@
+#!/bin/bash
+
+# Function to perform basic arithmetic operations
+basic_operations() {
+    echo "Enter two numbers:"
+    read num1
+    read num2
+
+    sum=$(expr $num1 + $num2)
+    echo "Sum: $sum"
+
+    difference=$(expr $num1 - $num2)
+    echo "Difference: $difference"
+
+    product=$(expr $num1 \* $num2)
+    echo "Product: $product"
+
+    if [ $num2 -ne 0 ]; then
+        division=$(echo "scale=2; $num1 / $num2" | bc)
+        echo "Division: $division"
+    else
+        echo "Cannot divide by zero"
+    fi
+}
+
+# Function to calculate area and perimeter of circle
+circle_operations() {
+    echo "Enter the radius of the circle:"
+    read radius
+
+    area=$(echo "scale=2; 3.14 * $radius * $radius" | bc)
+    echo "Area of the circle: $area"
+
+    perimeter=$(echo "scale=2; 2 * 3.14 * $radius" | bc)
+    echo "Perimeter of the circle: $perimeter"
+}
+
+# Function to calculate gross salary
+calculate_gross_salary() {
+    echo "Enter the basic salary:"
+    read basic_salary
+
+    DA=$(echo "scale=2; $basic_salary * 0.0165" | bc)
+    HRA=$(echo "scale=2; $basic_salary * 0.003" | bc)
+
+    gross_salary=$(echo "scale=2; $basic_salary + $DA + $HRA" | bc)
+    echo "Gross salary: $gross_salary"
+}
+
+# Function to calculate mean salary
+calculate_mean_salary() {
+    basic_salary_A=1200
+    basic_salary_B=1400
+    basic_salary_C=1350
+    basic_salary_D=1800
+
+    mean_salary=$(echo "scale=2; ($basic_salary_A + $basic_salary_B + $basic_salary_C + $basic_salary_D) / 4" | bc)
+    echo "Mean salary: $mean_salary"
+}
+
+# Main script
+echo "1. Basic Arithmetic Operations"
+echo "2. Calculate Area and Perimeter of Circle"
+echo "3. Calculate Gross Salary"
+echo "4. Calculate Mean Salary"
+echo "Enter your choice:"
+read choice
+
+case $choice in
+    1) basic_operations ;;
+    2) circle_operations ;;
+    3) calculate_gross_salary ;;
+    4) calculate_mean_salary ;;
+    *) echo "Invalid choice" ;;
+esac

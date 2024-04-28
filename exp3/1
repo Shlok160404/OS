@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# Function to compare two strings
+compare_strings() {
+    if [ "$1" = "$2" ]; then
+        echo "Strings are equal"
+    else
+        echo "Strings are not equal"
+    fi
+}
+
+# Function to concatenate two strings
+concatenate_strings() {
+    concatenated="$1$2"
+    echo "Concatenated string: $concatenated"
+}
+
+# Function to find the length of a string
+string_length() {
+    length=${#1}
+    echo "Length of the string: $length"
+}
+
+# Function to print odd-position characters
+odd_position_characters() {
+    length=${#1}
+    echo "Odd-position characters:"
+    for (( i=0; i<$length; i+=2 )); do
+        echo "${1:$i:1}"
+    done
+}
+
+# Function to check if a string is palindrome
+is_palindrome() {
+    reverse=$(echo "$1" | rev)
+    if [ "$1" = "$reverse" ]; then
+        echo "Given string is a palindrome"
+    else
+        echo "Given string is not a palindrome"
+    fi
+}
+
+# Function to print reverse of a string
+reverse_string() {
+    reverse=$(echo "$1" | rev)
+    echo "Reverse of the string: $reverse"
+}
+
+# Function to find occurrence of a character in a string
+find_occurrence() {
+    count=$(echo "$1" | grep -o "$2" | wc -l)
+    echo "Occurrence of '$2' in the string: $count"
+}
+
+# Main script
+
+echo "Enter first string:"
+read string1
+
+echo "Enter second string:"
+read string2
+
+compare_strings "$string1" "$string2"
+concatenate_strings "$string1" "$string2"
+string_length "$string1"
+odd_position_characters "$string1"
+is_palindrome "$string1"
+reverse_string "$string1"
+echo "Enter a character to find its occurrence in the first string:"
+read char
+find_occurrence "$string1" "$char"

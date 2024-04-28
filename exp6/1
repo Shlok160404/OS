@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# Function to print the pattern using for loop
+print_pattern_for() {
+    n=$1
+
+    # Print upper part of the pattern
+    for (( i=1; i<=n; i++ )); do
+        for (( j=1; j<=i; j++ )); do
+            echo -n "*"
+        done
+        echo ""
+    done
+
+    # Print lower part of the pattern
+    for (( i=n-1; i>=1; i-- )); do
+        for (( j=1; j<=i; j++ )); do
+            echo -n "*"
+        done
+        echo ""
+    done
+}
+
+# Function to print the pattern using while loop
+print_pattern_while() {
+    n=$1
+    i=1
+
+    # Print upper part of the pattern
+    while [ $i -le $n ]; do
+        j=1
+        while [ $j -le $i ]; do
+            echo -n "*"
+            j=$((j+1))
+        done
+        echo ""
+        i=$((i+1))
+    done
+
+    # Print lower part of the pattern
+    i=$((n-1))
+    while [ $i -ge 1 ]; do
+        j=1
+        while [ $j -le $i ]; do
+            echo -n "*"
+            j=$((j+1))
+        done
+        echo ""
+        i=$((i-1))
+    done
+}
+
+# Function to print the pattern using do-while loop
+print_pattern_do_while() {
+    n=$1
+    i=1
+
+    # Print upper part of the pattern
+    while [ $i -le $n ]; do
+        j=1
+        while [ $j -le $i ]; do
+            echo -n "*"
+            j=$((j+1))
+        done
+        echo ""
+        i=$((i+1))
+    done
+
+    # Print lower part of the pattern
+    i=$((n-1))
+    while [ $i -ge 1 ]; do
+        j=1
+        while [ $j -le $i ]; do
+            echo -n "*"
+            j=$((j+1))
+        done
+        echo ""
+        i=$((i-1))
+    done
+}
+
+# Main script
+echo "Enter the value of n:"
+read n
+
+echo "Pattern using for loop:"
+print_pattern_for $n
+
+echo "Pattern using while loop:"
+print_pattern_while $n
+
+echo "Pattern using do-while loop:"
+print_pattern_do_while $n

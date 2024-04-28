@@ -1,0 +1,63 @@
+#include <iostream>
+#include <unordered_map>
+#include <limits>
+
+using namespace std;
+
+int findFurthestReference(int pages[], int frame[], int currentIndex, int frameSize) {
+    int farthestIndex = -1;
+    int farthestDistance = numeric_limits<int>::min();
+
+    for (int i = 0; i < frameSize; ++i) {
+        int distance = numeric_limits<int>::max();
+        for (int j = currentIndex + 1; j < frameSize; ++j) {
+            if (frame[i] == pages[j]) {
+                distance = j - currentIndex;
+                break;
+            }
+        }
+        if (distance > farthestDistance) {
+            farthestIndex = i;
+            farthestDistance = distance;
+        }
+    }
+
+    return farthestIndex;
+}
+
+int SPFCalls(int pages[], int pageLength, int capacity) {
+    int* frame = new int[capacity];
+    unordered_map<int, int> indexes;
+    int pageFaults = 0;
+
+    for (int i = 0; i < pageLength; ++i) {
+        if (indexes.find(pages[i]) == indexes.end()) {
+            if (indexes.size() < capacity) {
+                frame[pageFaults] = pages[i];
+                indexes[pages[i]] = pageFaults;
+                ++pageFaults;
+            } else {
+                int farthest = findFurthestReference(pages, frame, i, capacity);
+                indexes.erase(frame[farthest]);
+                indexes[pages[i]] = farthest;
+                frame[farthest] = pages[i];
+                ++pageFaults;
+            }
+        }
+    }
+
+    delete[] frame;
+    return pageFaults;
+}
+
+int main() {
+    int pages[] = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2};
+    int pageLength = sizeof(pages) / sizeof(pages[0]);
+    int capacity = 4;
+
+    int pageFaults = SPFCalls(pages, pageLength, capacity);
+
+    cout << "Total Page Faults: " << pageFaults << endl;
+
+    return 0;
+}
